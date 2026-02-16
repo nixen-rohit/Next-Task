@@ -1,4 +1,21 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --primary-color: theme('colors.indigo.600');
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scrollbar styling */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
 
 :root {
   --background: #ffffff;
