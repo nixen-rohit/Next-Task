@@ -1,21 +1,33 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import MainView from "@/components/MainView";
-import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
+import { useAuth } from "@/components/AuthProvider";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Home from "@/components/Home";
 
-const SideBar = dynamic(() => import("@/components/SideBar"), {
-  ssr: false,
-});
+export default function Page() {
+  const { user }: any = useAuth();
+  const router = useRouter();
 
-function Page() {
+  useEffect(() => {
+    if (user === undefined) return; // still loading
+
+    if (!user) {
+      router.replace("/auth/login");
+    }
+  }, [user, router]);
+
+  if (user === undefined) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <main className="mx-auto flex h-screen w-full">
-      <SideBar />
-      <MainView />
-      <AddTaskForm />
-    </main>
+    <>
+      <Home />
+    </>
   );
 }
-
-export default Page;
